@@ -6,7 +6,7 @@ var data ;
 
 app = express();
 
-var data  = 'Welcome Nagavijay';
+data  = 'Welcome Nagavijay';
 
 app.get('/',function(req,res){
     res.send(data +' - Please use this (http://127.0.0.1:1234/dashboard) link to access dashboard Page');
