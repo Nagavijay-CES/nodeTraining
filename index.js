@@ -4,7 +4,7 @@ var data ;
 
 /*With Express Server Framework  */
 
-app = express();
+var app = express();
 
 data  = 'Welcome Nagavijay';
 
