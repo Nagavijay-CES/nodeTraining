@@ -5,7 +5,7 @@ var bodyParser = require('body-parser'); // Body Parser to parse the body data i
 
 /*With Express Server Framework  */
 
-app.use(bodyParser.json()) // This functiona will call on evert time you hit API, Then it parse the data into json format.
+app.use(bodyParser.json()); // This functiona will call on evert time you hit API, Then it parse the data into json format.
 
 var data  = 'Welcome Nagavijay';
 app.get('/',function(req,res){
@@ -24,10 +24,10 @@ app.post('/home',authGaurd,function(req,res){
 
     jwt.verify(req.token,'secretKey',function(err,data){
             if(err){
-                res.send(err.message)
+                res.send(err.message);
             }
             else{
-                res.end('Success : Token Accepted.')
+                res.end('Success : Token Accepted.');
             }
     })
 });
@@ -39,8 +39,8 @@ app.post('/login',function(req,res){
     //jwt.sign creates a token using the provided JSON data
 
     jwt.sign({userData},'secretKey',{expiresIn: '120s'}, function(err,token){
-        console.log(token)
-        res.json({token})
+        console.log(token);
+        res.json({token});
     })
 
 })
