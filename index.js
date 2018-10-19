@@ -1,7 +1,7 @@
-var express= require('express');
-var jwt = require('jsonwebtoken'); // JWT to create token based on given result.
-var app = express(); 
-var bodyParser = require('body-parser'); // Body Parser to parse the body data into JSOn format before processing the request.
+const express= require('express');
+const jwt = require('jsonwebtoken'); // JWT to create token based on given result.
+const app = express(); 
+const bodyParser = require('body-parser'); // Body Parser to parse the body data into JSOn format before processing the request.
 
 /*With Express Server Framework  */
 
@@ -21,7 +21,7 @@ app.get('/dashboard',function(req,res){
 
 app.post('/home',authGaurd,function(req,res){
     // Here we can verify wether the token is available or not
-
+    
     jwt.verify(req.token,'secretKey',function(err,data){
             if(err){
                 res.send(err.message);
