@@ -6,7 +6,7 @@ var Employees = new mongoose.Schema(
     name: { type: String },
     mobile: { type: Number },
     email: { type: String },
-    gender: { type: Boolean }
+    gender: { type: String }
   },
   { collection: 'Employees' }
 );

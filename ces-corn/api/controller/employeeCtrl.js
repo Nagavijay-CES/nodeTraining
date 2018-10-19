@@ -5,7 +5,7 @@ let Employees = require('../model/employeeModel.js'); // Importing Model
 
 // Get all records from Database by ID
 router.get('/', (req, res) => {
-  Employees.find({}, function(err, doc) {
+  Employees.find({}, function (err, doc) {
     if (err) {
       res.send(err);
     } else {
@@ -21,7 +21,7 @@ router.get('/:id', (req, res) => {
     return res.status(400).send('No record is there with this ID');
   }
 
-  Employees.findById(req.params.id, function(err, doc) {
+  Employees.findById(req.params.id, function (err, doc) {
     if (err) {
       res.send(err);
     } else {
@@ -43,7 +43,9 @@ router.post('/save', (req, res) => {
     if (err) {
       res.send(err);
     } else {
+      console.log('You have created one employee record in database');
       res.send(doc);
+
     }
   });
 });
@@ -61,14 +63,16 @@ router.put('/:id', (req, res) => {
     gender: req.body.gender
   };
 
-  Employees.findByIdAndUpdate(req.params.id, { $set: emp }, { new: true }, function(
+  Employees.findByIdAndUpdate(req.params.id, { $set: emp }, { new: true }, function (
     err,
     doc
   ) {
     if (err) {
       res.send(err);
     } else {
+      console.log('You have updated one employee record in database');
       res.send(doc);
+
     }
   });
 });
@@ -78,11 +82,11 @@ router.delete('/:id', (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
     return res.status(400).send('No record is there with this ID');
   }
-
-  Employees.findOneAndDelete(req.params.id, function(err, doc) {
+  Employees.findByIdAndDelete({_id: req.params.id}, function (err, doc) {
     if (err) {
       res.send(err);
     } else {
+      console.log('You have removed one employee record in database');
       res.send(doc);
     }
   });
