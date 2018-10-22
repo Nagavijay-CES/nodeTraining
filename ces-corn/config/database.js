@@ -5,7 +5,7 @@ mongodb.connect(
   { useNewUrlParser: true },
   function(err, doc) {
     if (err) {
-      console.log('Error in connecting to Database');
+      console.log('Error in connecting to Database', err);
     } else {
       console.log('Successfully Connected to database');
     }

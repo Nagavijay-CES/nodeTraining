@@ -78,18 +78,15 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete a record from Database by ID
-router.delete('/:id', (req, res) => {
+module.exports = {
+  deleteAnEmployee : deleteAnEmployee
+}
+function deleteAnEmployee(){
+  console.log('Entered into ')
   if (!ObjectId.isValid(req.params.id)) {
     return res.status(400).send('No record is there with this ID');
-  }
-  Employees.findByIdAndDelete({_id: req.params.id}, function (err, doc) {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log('You have removed one employee record in database');
-      res.send(doc);
-    }
-  });
-});
+  } 
+  Employees.deleteEmployee();
+}
 
 module.exports = router;
