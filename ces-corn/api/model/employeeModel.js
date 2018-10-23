@@ -1,7 +1,6 @@
-const mongoose = require('mongoose'); // Import mongoose
+import { Schema, model } from 'mongoose';
 
-// Create schema using mongoose.Schema
-var Employees = new mongoose.Schema(
+var EmployeeModel = new Schema(
   {
     name: { type: String },
     mobile: { type: Number },
@@ -10,21 +9,36 @@ var Employees = new mongoose.Schema(
   },
   { collection: 'Employees' }
 );
-module.exports = {
-  deleteEmployee :deleteEmployee 
-}
-// Export schema
-module.exports = mongoose.model('Employees', Employees);
-module.exports.schema = Employees;
 
+EmployeeModel.statics.deleteEmployee = deleteEmployee;
+EmployeeModel.statics.findAllEmployees = findAllEmployees;
 
-function deleteEmployee(){
-  Employees.findByIdAndDelete({_id: req.params.id}, function (err, doc) {
+module.exports = model('EmployeeModel', EmployeeModel);
+
+function deleteEmployee(paramID) {
+  return EmployeeModel.findByIdAndDelete({ _id: paramID }, function(err, doc) {
     if (err) {
-      res.send(err);
-    } else {
-      console.log('You have removed one employee record in database');
-      res.send(doc);
+      return err;
     }
+    console.log(
+      'You have removed one employee record in database: ',
+      JSON.stringify(doc)
+    );
+    return doc;
+    // IF-ELSE
   });
-}
+} // DELETE-EMPLOYEE
+
+function findAllEmployees() {
+  return EmployeeModel.find({}, function(err, doc) {
+    if (err) {
+      return err;
+    }
+    console.log(
+      'You have removed one employee record in database: ',
+      JSON.stringify(doc)
+    );
+    return doc;
+    // IF-ELSE
+  });
+} // FN FIND-ALL-EMPLOYEES

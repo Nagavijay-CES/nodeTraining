@@ -1,9 +1,10 @@
 let mongodb = require('mongoose');
-let mongo = mongodb.MongoClient;
+// Let mongo = mongodb.MongoClient;
+
 mongodb.connect(
   'mongodb://localhost:27017/crud_database',
   { useNewUrlParser: true },
-  function(err, doc) {
+  function(err) {
     if (err) {
       console.log('Error in connecting to Database', err);
     } else {
