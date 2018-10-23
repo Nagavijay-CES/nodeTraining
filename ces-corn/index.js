@@ -1,21 +1,18 @@
-import express from 'express';
-import { json } from 'body-parser';
+const EXPRESS = require('express');
+const BODY_PARSER = require('body-parser');
 
-// Const { mongoose } = require('./config/database.js');
-// import EmployeeCtrl from './api/controller/EmployeeCtrl.js';
-// import routes from './config/routes.js';
-
-let app = express();
+let databaseObj = require('./config/database.js');
 let employeeRouter = require('./config/routes/employees.js');
 
-app.use(json());
+let app = EXPRESS();
+const PORT = 5686;
 
+app.use(BODY_PARSER.json());
 app.use('/employees', employeeRouter);
 
-// App.get('/', function(req, res) {
-//   res.send('Request Received');
-// });
-
-app.listen(5686);
+databaseObj.connectDB().then(response => {
+    app.listen(PORT);
+    console.log('Listening on port #', PORT);
+});
 
 module.exports = app;

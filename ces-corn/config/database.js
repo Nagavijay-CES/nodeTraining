@@ -1,16 +1,21 @@
-let mongodb = require('mongoose');
-// Let mongo = mongodb.MongoClient;
+const MONGOOSE = require('mongoose');
 
-mongodb.connect(
-  'mongodb://localhost:27017/crud_database',
-  { useNewUrlParser: true },
-  function(err) {
-    if (err) {
-      console.log('Error in connecting to Database', err);
-    } else {
-      console.log('Successfully Connected to database');
+let databaseObj = {
+  connectDB: connectDB
+};
+
+function connectDB () {
+  return MONGOOSE.connect(
+    'mongodb://localhost:27017/crud_database',
+    { useNewUrlParser: true },
+    function(err) {
+      if (err) {
+        console.log('Error in connecting to Database', err);
+      } else {
+        console.log('Successfully Connected to database');
+      }
     }
-  }
-);
+  );
+}
 
-module.exports = mongodb;
+module.exports = databaseObj;
