@@ -1,95 +1,53 @@
-const express = require('express');
-let router = express.Router(); // To separate routes.
-let ObjectId = require('mongoose').Types.ObjectId; // To check based on ID whether the object is present in the collection
-let Employees = require('../model/employeeModel.js'); // Importing Model
+let employeeModel = require('../model/employeeModel.js');
 
-// Get all records from Database by ID
-router.get('/', (req, res) => {
-  Employees.find({}, function (err, doc) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(doc);
-    }
-  });
-});
+let employeeCtrl = {
+  findAllEmployees: findAllEmployees,
+  createEmployeeData: createEmployeeData,
+  findAnEmployee: findAnEmployee,
+  findAndDelete: findAndDelete,
+  updateEmployee: updateEmployee
+};
 
-// Get  a record from Database by ID
-router.get('/:id', (req, res) => {
-  // Check whether the id is present in database
-  if (!ObjectId.isValid(req.params.id)) {
-    return res.status(400).send('No record is there with this ID');
-  }
+function findAllEmployees(req, res) {
 
-  Employees.findById(req.params.id, function (err, doc) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(doc);
-    }
-  });
-});
-
-// Save a record into collection.
-router.post('/save', (req, res) => {
-  emp = new Employees({
-    name: req.body.name,
-    mobile: req.body.mobile,
-    email: req.body.email,
-    gender: req.body.gender
+  employeeModel.findAllEmployees().then(response => {
+    console.log('REquested for list of employess')
+    res.send(response);
   });
 
-  emp.save((err, doc) => {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log('You have created one employee record in database');
-      res.send(doc);
+} // Find all employee func
+function findAnEmployee(req, res) {
 
-    }
+  employeeModel.findEmployee(req.params.id).then(response => {
+    console.log('requested for an employee details')
+    res.send(response);
   });
-});
 
-// Update  a record from Database by ID
-router.put('/:id', (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
-    return res.status(400).send('No record is there with this ID');
-  }
+} // Find an employee func
 
-  let emp = {
-    name: req.body.name,
-    mobile: req.body.mobile,
-    email: req.body.email,
-    gender: req.body.gender
-  };
+function createEmployeeData(req, res) {
 
-  Employees.findByIdAndUpdate(req.params.id, { $set: emp }, { new: true }, function (
-    err,
-    doc
-  ) {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log('You have updated one employee record in database');
-      res.send(doc);
-
-    }
+  employeeModel.createEmployeeRecord(req.body).then(response => {
+    console.log('Created a record for an employee');
+    res.send(response);
   });
-});
+} // create record func
 
-// Delete a record from Database by ID
-router.delete('/:id', (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
-    return res.status(400).send('No record is there with this ID');
-  }
-  Employees.findByIdAndDelete({_id: req.params.id}, function (err, doc) {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log('You have removed one employee record in database');
-      res.send(doc);
-    }
+function updateEmployee(req, res) {
+
+  employeeModel.updateEmployeeData(req).then(response => {
+    console.log('Successfully updated an employee details')
+    res.send(response);
   });
-});
 
-module.exports = router;
+} // Update func
+function findAndDelete(req, res) {
+
+  employeeModel.deleteEmployee(req.params.id).then(response => {
+    console.log('Successfully deleted an employee record')
+    res.send(response);
+  });
+
+} // Delete an employee func
+
+module.exports = employeeCtrl;
